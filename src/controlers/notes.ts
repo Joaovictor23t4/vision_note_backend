@@ -71,7 +71,7 @@ export class NoteController {
             code: 201,
             httpStatus: "CREATED",
             status: "SUCCESS",
-            data: [note]
+            data: note
         }
         return reply.status(201).send(response);
     }
