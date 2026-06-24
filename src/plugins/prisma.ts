@@ -1,9 +1,15 @@
 import fp from "fastify-plugin"
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+
 
 // Use 'async' to support awaiting client connection
 export default fp(async (fastify, opts) => {
-  const prisma = new PrismaClient();
+  const prisma = new PrismaClient({
+    adapter: new PrismaPg({
+      connectionString: process.env.DIRECT_URL
+    })
+  });
 
   // Decorate fastify so you can access it via `fastify.prisma`
   fastify.decorate('prisma', prisma);
